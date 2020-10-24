@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    {% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    {% endblock %}
+    <h1>Enter Trip Information</h1>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+
+    {% block scripts %}
+        {{ super() }}
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script>
+        $(function() {
+        $( "#datepick" ).datepicker();
+        });
+        </script>
+    {% endblock %}
+
+    {% if results %}
+    <div>
+        <h1>Results</h1>
+        <p>
+            Minimum Price: ${{ results["min_price"] }}, Average Price: ${{ results["average_price"] }} <br>
+            Minimum Duration: {{ results["min_duration"] }}, Average Duration: {{ results["average_duration"] }} <br>
+            Minimum Number of Stops: {{ results["min_number_of_stops"] }}, Average Number of Stops: {{ results["average_number_of_stops"] }} <br>
+        </p>
+        <img src="data:image/png;base64,{{ plot_url }}">
+    </div>
+    {% endif %}
+
+{% endblock %}
